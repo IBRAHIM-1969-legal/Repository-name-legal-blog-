@@ -1,431 +1,385 @@
-<!DOCTYPE html>  
-<html lang="ar" dir="rtl">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>المستشار القانوني - استشارات وحلول قانونية</title>  
-    <style>  
-        * { margin: 0; padding: 0; box-sizing: border-box; }  
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f4f7fa; color: #1a1a2e; line-height: 1.8; }  
-        a { text-decoration: none; color: inherit; }  
-
-        /* الشريط العلوي */  
-        nav { background: #1a1a2e; color: #fff; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; position: sticky; top: 0; z-index: 1000; }  
-        .logo { font-size: 24px; font-weight: bold; color: #c19b4c; }  
-        .logo span { color: #fff; }  
-        .nav-links { display: flex; gap: 25px; list-style: none; }  
-        .nav-links a { color: #ddd; font-size: 15px; transition: 0.3s; }  
-        .nav-links a:hover { color: #c19b4c; }
-        .lang-switcher { display: flex; gap: 10px; }
-        .lang-btn { background: #c19b4c; color: #1a1a2e; padding: 8px 15px; border-radius: 4px; cursor: pointer; border: none; font-weight: bold; transition: 0.3s; }
-        .lang-btn:hover { background: #d4b06a; }
-        .lang-btn.active { background: #fff; }
-
-        /* الصفحة الترحيبية */  
-        .hero { background: linear-gradient(135deg, #1a1a2e, #16213e); color: #fff; text-align: center; padding: 100px 20px 80px; }  
-        .hero h1 { font-size: 48px; margin-bottom: 20px; }  
-        .hero h1 span { color: #c19b4c; }  
-        .hero p { font-size: 20px; color: #ccc; max-width: 700px; margin: 0 auto 30px; }  
-        .btn { display: inline-block; background: #c19b4c; color: #1a1a2e; padding: 14px 40px; border-radius: 6px; font-size: 18px; font-weight: bold; transition: 0.3s; border: none; cursor: pointer; }  
-        .btn:hover { background: #d4b06a; transform: translateY(-2px); }  
-
-        .section { padding: 60px 20px; }  
-        .container { max-width: 1100px; margin: 0 auto; }  
-        .section-title { text-align: center; font-size: 32px; margin-bottom: 15px; color: #1a1a2e; }  
-        .section-title span { color: #c19b4c; }  
-        .section-desc { text-align: center; color: #555; margin-bottom: 40px; font-size: 17px; }  
-
-        /* الخدمات */  
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }  
-        .service-card { background: #fff; padding: 30px 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); text-align: center; transition: 0.3s; }  
-        .service-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); }  
-        .service-card .icon { font-size: 40px; margin-bottom: 15px; }  
-        .service-card h3 { margin-bottom: 10px; }  
-        .service-card p { color: #666; font-size: 15px; }  
-
-        /* من نحن */  
-        .about-content { display: flex; gap: 40px; align-items: center; flex-wrap: wrap; }  
-        .about-text { flex: 2; min-width: 280px; }  
-        .about-text p { margin-bottom: 15px; color: #444; }  
-        .about-stats { flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: 20px; }  
-        .stat { background: #1a1a2e; color: #fff; padding: 20px; border-radius: 10px; text-align: center; }  
-        .stat .number { font-size: 32px; font-weight: bold; color: #c19b4c; }  
-
-        /* الأسئلة والأجوبة */  
-        .faq-item { background: #fff; border-radius: 8px; margin-bottom: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); overflow: hidden; }  
-        .faq-question { padding: 18px 25px; font-weight: bold; font-size: 17px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: #fff; transition: 0.3s; border: none; width: 100%; }  
-        .faq-question:hover { background: #f8f4ec; }  
-        .faq-question .arrow { transition: 0.3s; font-size: 20px; }  
-        .faq-question.active .arrow { transform: rotate(180deg); }  
-        .faq-answer { padding: 0 25px; max-height: 0; overflow: hidden; transition: 0.3s; color: #555; }  
-        .faq-answer.open { padding: 0 25px 18px; max-height: 300px; }  
-
-        /* المقالات */  
-        .articles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }  
-        .article-card { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); transition: 0.3s; }  
-        .article-card:hover { transform: translateY(-3px); }  
-        .article-img { height: 180px; background: linear-gradient(135deg, #1a1a2e, #c19b4c); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 50px; }  
-        .article-body { padding: 20px; }  
-        .article-body h3 { margin-bottom: 10px; }  
-        .article-body p { color: #666; font-size: 14px; margin-bottom: 15px; }  
-        .read-more { color: #c19b4c; font-weight: bold; }  
-
-        /* اتصل بنا */  
-        .contact-grid { display: flex; gap: 40px; flex-wrap: wrap; }  
-        .contact-info { flex: 1; min-width: 250px; }  
-        .contact-info p { margin-bottom: 15px; color: #555; }  
-        .contact-info .info-item { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }  
-        .contact-info .info-item .ico { font-size: 22px; }  
-        .contact-form { flex: 2; min-width: 280px; }  
-        .contact-form input, .contact-form textarea { width: 100%; padding: 12px 15px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 6px; font-size: 15px; font-family: inherit; }  
-        .contact-form textarea { height: 120px; resize: vertical; }  
-        .contact-form input:focus, .contact-form textarea:focus { border-color: #c19b4c; outline: none; }  
-
-        /* الفوتر */  
-        footer { background: #1a1a2e; color: #ccc; text-align: center; padding: 30px 20px; font-size: 14px; }  
-        footer span { color: #c19b4c; }
-
-        .hidden { display: none; }
-
-        @media (max-width: 768px) {  
-            nav { flex-direction: column; gap: 15px; padding: 15px 20px; }  
-            .nav-links { gap: 15px; flex-wrap: wrap; justify-content: center; }  
-            .hero h1 { font-size: 30px; }  
-            .hero p { font-size: 17px; }  
-            .section { padding: 40px 15px; }  
-        }  
-    </style>  
-</head>  
-<body>  
-    <nav>  
-        <div class="logo"><span id="logo-text">المستشار</span> <span id="logo-name">القانوني</span></div>  
-        <div style="display: flex; gap: 30px; align-items: center; flex-wrap: wrap;">
-            <ul class="nav-links">  
-                <li><a href="#home" data-ar="الرئيسية" data-ku="ماڵەوە">الرئيسية</a></li>  
-                <li><a href="#services" data-ar="الخدمات" data-ku="خزمەتگوزاری">الخدمات</a></li>  
-                <li><a href="#about" data-ar="من نحن" data-ku="ئێمە کێین">من نحن</a></li>  
-                <li><a href="#faq" data-ar="أسئلة وأجوبة" data-ku="سوال و وەڵام">أسئلة وأجوبة</a></li>  
-                <li><a href="#articles" data-ar="المقالات" data-ku="نووسینەکان">المقالات</a></li>  
-                <li><a href="#contact" data-ar="اتصل بنا" data-ku="پەیوەندی بگرن">اتصل بنا</a></li>  
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استشارات قانونية احترافية - Ibrahim Legal Services</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-balance-scale"></i>
+                <span>Ibrahim Legal</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home"><i class="fas fa-home"></i> الرئيسية</a></li>
+                <li><a href="#about"><i class="fas fa-user"></i> عني</a></li>
+                <li><a href="#services"><i class="fas fa-briefcase"></i> الخدمات</a></li>
+                <li><a href="#consultation"><i class="fas fa-comments"></i> استشارة</a></li>
+                <li><a href="#contact"><i class="fas fa-phone"></i> اتصل</a></li>
             </ul>
-            <div class="lang-switcher">
-                <button class="lang-btn active" onclick="switchLanguage('ar')">العربية</button>
-                <button class="lang-btn" onclick="switchLanguage('ku')">کوردی</button>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
-    </nav>  
+    </nav>
 
-    <section class="hero" id="home">  
-        <h1><span id="hero-title">المستشار</span> <span id="hero-span">القانوني</span></h1>  
-        <p id="hero-desc">نقدم استشارات وحلول قانونية متكاملة بكل احترافية ومصداقية.</p>  
-        <a href="#contact" class="btn" id="btn-consult">احصل على استشارة</a>  
-    </section>  
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>استشارات قانونية احترافية</h1>
+            <p>متخصص في تقديم الاستشارات القانونية المتميزة عبر الإنترنت</p>
+            <div class="hero-buttons">
+                <a href="#consultation" class="btn btn-primary">اطلب استشارة</a>
+                <a href="#about" class="btn btn-secondary">تعرف أكثر</a>
+            </div>
+        </div>
+        <div class="hero-shape"></div>
+    </section>
 
-    <section class="section" id="services">  
-        <div class="container">  
-            <h2 class="section-title"><span id="services-title">الخدمات</span> <span id="services-span">القانونية</span></h2>  
-            <p class="section-desc" id="services-desc">نقدم مجموعة متكاملة من الخدمات القانونية</p>  
-            <div class="services-grid">  
-                <div class="service-card">  
-                    <div class="icon">⚖️</div>  
-                    <h3 id="service1-title">استشارات قانونية</h3>  
-                    <p id="service1-desc">استشارات فردية ومؤسسية في كافة المسائل القانونية</p>  
-                </div>  
-                <div class="service-card">  
-                    <div class="icon">📝</div>  
-                    <h3 id="service2-title">صياغة العقود</h3>  
-                    <p id="service2-desc">صياغة ومراجعة العقود التجارية والاتفاقيات</p>  
-                </div>  
-                <div class="service-card">  
-                    <div class="icon">🏛️</div>  
-                    <h3 id="service3-title">تمثيل قضائي</h3>  
-                    <p id="service3-desc">تمثيلك أمام المحاكم والجهات القضائية</p>  
-                </div>  
-                <div class="service-card">  
-                    <div class="icon">📋</div>  
-                    <h3 id="service4-title">توثيق وصياغة</h3>  
-                    <p id="service4-desc">توثيق المحاضر والوكالات والمستندات القانونية</p>  
-                </div>  
-            </div>  
-        </div>  
-    </section>  
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2>من أنا؟</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>أنا <strong>إبراهيم</strong>، خريج كلية القانون بمرتبة الشرف. متخصص في تقديم الاستشارات القانونية الموثوقة والسريعة عبر الإنترنت.</p>
+                    <p>مع سنوات من الخبرة في المجال القانوني، أقدم حلولاً قانونية فعّالة لكل تحدياتك القانونية.</p>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <h3>500+</h3>
+                            <p>استشارة مكتملة</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>98%</h3>
+                            <p>رضا العملاء</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>24/7</h3>
+                            <p>خدمة متاحة</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="placeholder-avatar">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <section class="section" id="about" style="background:#fff;">  
-        <div class="container">  
-            <h2 class="section-title"><span id="about-title">من</span> <span id="about-span">نحن</span></h2>  
-            <div class="about-content">  
-                <div class="about-text">  
-                    <p id="about-p1">نحن فريق من المستشارين القانونيين المتخصصين، نملك خبرة تمتد لأكثر من 15 عاماً في مختلف فروع القانون.</p>  
-                    <p id="about-p2">نسعى لتقديم خدمات قانونية متميزة بأسعار مناسبة، مع التركيز على فهم احتياجات كل عميل.</p>  
-                    <p id="about-p3">نضمن السرية التامة لجميع المعلومات والبيانات.</p>  
-                </div>  
-                <div class="about-stats">  
-                    <div class="stat"><div class="number">15+</div><div id="stat1">سنة خبرة</div></div>  
-                    <div class="stat"><div class="number">500+</div><div id="stat2">قضية ناجحة</div></div>  
-                    <div class="stat"><div class="number">98%</div><div id="stat3">رضا العملاء</div></div>  
-                </div>  
-            </div>  
-        </div>  
-    </section>  
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2>مجالات التخصص</h2>
+            <p class="section-desc">تقديم استشارات متخصصة في:</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <h3>القانون المدني</h3>
+                    <p>العقود والالتزامات والعلاقات بين الأفراد والممتلكات والملكية</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <h3>القانون الجنائي</h3>
+                    <p>حقوقك في القضايا الجنائية والدفاع القانوني والعقوبات</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3>قانون العمل</h3>
+                    <p>الحقوق والواجبات بين الموظف والمؤسسة والعقود الوظيفية</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <h3>القانون التجاري</h3>
+                    <p>العقود التجارية والشركات والتجارة الإلكترونية</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3>القانون العقاري</h3>
+                    <p>العقارات والملكية والإيجار والمعاملات العقارية</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>الأحوال الشخصية</h3>
+                    <p>الزواج والطلاق والوصية والإرث والأسرة</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <h3>القانون الإداري</h3>
+                    <p>العلاقات مع الجهات الإدارية والقرارات الإدارية</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>الحقوق والحريات</h3>
+                    <p>الدفاع عن حقوقك الشخصية والحريات الأساسية</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <section class="section" id="faq">  
-        <div class="container">  
-            <h2 class="section-title"><span id="faq-title">أسئلة</span> <span id="faq-span">وأجوبة</span></h2>  
-            <p class="section-desc" id="faq-desc">أكثر الأسئلة شيوعاً في المسائل القانونية</p>  
-            <div class="faq-item">  
-                <button class="faq-question" onclick="toggleFAQ(this)"><span id="faq-q1">ما هي المستندات المطلوبة لرفع دعوى قضائية؟</span> <span class="arrow">▼</span></button>  
-                <div class="faq-answer" id="faq-a1">تختلف المستندات حسب نوع القضية، ولكن بشكل عام تشمل: إثبات الشخصية، المستندات الداعمة للدعوى، والعقود ذات الصلة.</div>  
-            </div>  
-            <div class="faq-item">  
-                <button class="faq-question" onclick="toggleFAQ(this)"><span id="faq-q2">كم تستغرق القضية في المحكمة؟</span> <span class="arrow">▼</span></button>  
-                <div class="faq-answer" id="faq-a2">تختلف المدة حسب نوع القضية وتعقيدها، وتتراوح بين بضعة أسابيع إلى عدة أشهر. سنقدم لك توقعات دقيقة.</div>  
-            </div>  
-            <div class="faq-item">  
-                <button class="faq-question" onclick="toggleFAQ(this)"><span id="faq-q3">هل يمكن الحصول على استشارة قانونية مجانية؟</span> <span class="arrow">▼</span></button>  
-                <div class="faq-answer" id="faq-a3">نقدم استشارة أولية مجانية لمدة 15 دقيقة لتقييم قضيتك، ثم يتم الاتفاق على أتعاب الاستشارة.</div>  
-            </div>  
-            <div class="faq-item">  
-                <button class="faq-question" onclick="toggleFAQ(this)"><span id="faq-q4">كيف أختار المحامي المناسب لقضيتي؟</span> <span class="arrow">▼</span></button>  
-                <div class="faq-answer" id="faq-a4">اختر محامياً متخصصاً في مجال قضيتك، ولديه خبرة مثبتة. يمكننا مساعدتك في اختيار الأنسب.</div>  
-            </div>  
-        </div>  
-    </section>  
+    <!-- Consultation Section -->
+    <section id="consultation" class="consultation">
+        <div class="container">
+            <h2>اطلب استشارتك القانونية</h2>
+            <div class="consultation-content">
+                <div class="consultation-form">
+                    <form id="consultationForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fullname">الاسم الكامل *</label>
+                                <input type="text" id="fullname" name="fullname" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">رقم الهاتف *</label>
+                                <input type="tel" id="phone" name="phone" placeholder="+9647..." required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">البريد الإلكتروني *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="service">مجال الاستشارة *</label>
+                                <select id="service" name="service" required>
+                                    <option value="">اختر المجال</option>
+                                    <option value="مدني">القانون المدني</option>
+                                    <option value="جنائي">القانون الجنائي</option>
+                                    <option value="عمل">قانون العمل</option>
+                                    <option value="تجاري">القانون التجاري</option>
+                                    <option value="عقاري">القانون العقاري</option>
+                                    <option value="أحوال">الأحوال الشخصية</option>
+                                    <option value="إداري">القانون الإداري</option>
+                                    <option value="أخرى">أخرى</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">وصف المشكلة القانونية *</label>
+                            <textarea id="description" name="description" rows="6" placeholder="اشرح مشكلتك القانونية بالتفصيل..." required></textarea>
+                        </div>
+                        <div class="form-group checkbox">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <label for="terms">أوافق على شروط السرية والخصوصية</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-large">
+                            <i class="fas fa-paper-plane"></i> إرسال الاستشارة
+                        </button>
+                    </form>
+                </div>
+                <div class="consultation-info">
+                    <h3>معلومات الاستشارة</h3>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>سرعة الرد</h4>
+                            <p>الرد خلال 24 ساعة</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-lock"></i>
+                        <div>
+                            <h4>السرية التامة</h4>
+                            <p>جميع المعلومات سرية 100%</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <h4>موثوقية</h4>
+                            <p>استشارات قانونية احترافية</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <section class="section" id="articles" style="background:#fff;">  
-        <div class="container">  
-            <h2 class="section-title"><span id="articles-title">المقالات</span> <span id="articles-span">القانونية</span></h2>  
-            <p class="section-desc" id="articles-desc">أحدث المقالات والنصائح القانونية</p>  
-            <div class="articles-grid">  
-                <div class="article-card">  
-                    <div class="article-img">📑</div>  
-                    <div class="article-body">  
-                        <h3 id="article1-title">حقوقك في العقود التجارية</h3>  
-                        <p id="article1-desc">شرح مفصل لأهم الحقوق والواجبات في العقود التجارية</p>  
-                        <a href="#" class="read-more" id="read-more1">اقرأ المزيد →</a>  
-                    </div>  
-                </div>  
-                <div class="article-card">  
-                    <div class="article-img">⚖️</div>  
-                    <div class="article-body">  
-                        <h3 id="article2-title">خطوات رفع الدعوى في المحكمة</h3>  
-                        <p id="article2-desc">دليل شامل خطوة بخطوة لرفع دعوى قضائية</p>  
-                        <a href="#" class="read-more" id="read-more2">اقرأ المزيد →</a>  
-                    </div>  
-                </div>  
-                <div class="article-card">  
-                    <div class="article-img">🏢</div>  
-                    <div class="article-body">  
-                        <h3 id="article3-title">التشريعات الجديدة في القانون التجاري</h3>  
-                        <p id="article3-desc">أحدث التعديلات والقوانين الجديدة</p>  
-                        <a href="#" class="read-more" id="read-more3">اقرأ المزيد →</a>  
-                    </div>  
-                </div>  
-            </div>  
-        </div>  
-    </section>  
+    <!-- Laws Library Section -->
+    <section id="laws" class="laws">
+        <div class="container">
+            <h2>مكتبة القوانين والتشريعات</h2>
+            <p class="section-desc">مرجع سريع للقوانين الأساسية</p>
+            <div class="laws-grid">
+                <div class="law-item">
+                    <h3>القانون المدني</h3>
+                    <p>ينظم العلاقات بين الأفراد والعقود والالتزامات والمسؤولية المدنية والملكية</p>
+                    <button class="btn-expand">عرض التفاصيل</button>
+                </div>
+                <div class="law-item">
+                    <h3>قانون العمل</h3>
+                    <p>ينظم العلاقة بين الموظف والمؤسسة والحقوق والواجبات والعقود الوظيفية</p>
+                    <button class="btn-expand">عرض التفاصيل</button>
+                </div>
+                <div class="law-item">
+                    <h3>القانون الجنائي</h3>
+                    <p>يتعلق بالجرائم والعقوبات وحقوق المتهمين والضحايا والدفاع القانوني</p>
+                    <button class="btn-expand">عرض التفاصيل</button>
+                </div>
+                <div class="law-item">
+                    <h3>القانون التجاري</h3>
+                    <p>ينظم العقود التجارية والشركات والعلامات التجارية والتجارة الإلكترونية</p>
+                    <button class="btn-expand">عرض التفاصيل</button>
+                </div>
+                <div class="law-item">
+                    <h3>القانون العقاري</h3>
+                    <p>ينظم العقارات والملكية والإيجار والرهن والمعاملات العقارية</p>
+                    <button class="btn-expand">عرض التفاصيل</button>
+                </div>
+                <div class="law-item">
+                    <h3>الأحوال الشخصية</h3>
+                    <p>ينظم الزواج والطلاق والوصية والإرث والولاية والنسب</p>
+                    <button class="btn-expand">عرض التفاصيل</button>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <section class="section" id="contact">  
-        <div class="container">  
-            <h2 class="section-title"><span id="contact-title">اتصل</span> <span id="contact-span">بنا</span></h2>  
-            <div class="contact-grid">  
-                <div class="contact-info">  
-                    <p id="contact-intro">نرحب بكل استفساراتكم وطلباتكم. تواصلوا معنا عبر:</p>  
-                    <div class="info-item">  
-                        <span class="ico">📞</span>  
-                        <span id="phone">+966 50 1234567</span>  
-                    </div>  
-                    <div class="info-item">  
-                        <span class="ico">✉️</span>  
-                        <span id="email">info@legalblog.com</span>  
-                    </div>  
-                    <div class="info-item">  
-                        <span class="ico">📍</span>  
-                        <span id="location">الرياض، المملكة العربية السعودية</span>  
-                    </div>  
-                </div>  
-                <div class="contact-form">  
-                    <input type="text" placeholder="اسمك الكامل" id="form-name">  
-                    <input type="email" placeholder="بريدك الإلكتروني" id="form-email">  
-                    <textarea placeholder="رسالتك" id="form-message"></textarea>  
-                    <button class="btn" id="form-submit">إرسال الرسالة</button>  
-                </div>  
-            </div>  
-        </div>  
-    </section>  
+    <!-- Q&A Section -->
+    <section id="qa" class="qa">
+        <div class="container">
+            <h2>الأسئلة الشائعة والإجابات</h2>
+            <p class="section-desc">حلول سريعة لأسئلتك الشائعة</p>
+            <div class="qa-container">
+                <div id="qaList" class="qa-list">
+                    <!-- QA items loaded by JavaScript -->
+                </div>
+                <div class="qa-cta">
+                    <h3>لم تجد إجابتك؟</h3>
+                    <p>تواصل معنا مباشرة للاستشارة</p>
+                    <a href="#contact" class="btn btn-primary">اتصل الآن</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <footer>  
-        <p id="footer-text">© 2024 المستشار القانوني. جميع الحقوق محفوظة | <span id="footer-designed">صمم بكل احترافية</span></p>  
-    </footer>  
+    <!-- News Section -->
+    <section id="news" class="news">
+        <div class="container">
+            <h2>آخر الأخبار والتحديثات</h2>
+            <p class="section-desc">تابع أحدث المعلومات والتطورات القانونية</p>
+            <div class="news-grid">
+                <article class="news-card">
+                    <div class="news-date">15 يوليو 2026</div>
+                    <h3>إطلاق خدمة الاستشارات القانونية الإلكترونية الجديدة</h3>
+                    <p>نعلن عن إطلاق منصة حديثة لتقديم الاستشارات القانونية عبر الإنترنت مع ضمان السرية والموثوقية.</p>
+                    <div class="news-tags">
+                        <span>#خدمات جديدة</span>
+                        <span>#استشارات</span>
+                    </div>
+                </article>
+                <article class="news-card">
+                    <div class="news-date">10 يوليو 2026</div>
+                    <h3>توسيع اللغات المدعومة</h3>
+                    <p>الآن تتوفر خدماتنا بثلاث لغات: العربية والكردية والإنجليزية لخدمة عملاء أوسع.</p>
+                    <div class="news-tags">
+                        <span>#تطوير</span>
+                        <span>#لغات</span>
+                    </div>
+                </article>
+                <article class="news-card">
+                    <div class="news-date">05 يوليو 2026</div>
+                    <h3>استجابة سريعة لجميع الاستشارات</h3>
+                    <p>ضمان الرد على جميع الاستشارات في أقل من 24 ساعة مع توفير حلول قانونية موثوقة.</p>
+                    <div class="news-tags">
+                        <span>#جودة خدمة</span>
+                        <span>#التزام</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
 
-    <script>
-        const translations = {
-            ar: {
-                'logo-text': 'المستشار',
-                'logo-name': 'القانوني',
-                'hero-title': 'المستشار',
-                'hero-span': 'القانوني',
-                'hero-desc': 'نقدم استشارات وحلول قانونية متكاملة بكل احترافية ومصداقية.',
-                'btn-consult': 'احصل على استشارة',
-                'services-title': 'الخدمات',
-                'services-span': 'القانونية',
-                'services-desc': 'نقدم مجموعة متكاملة من الخدمات القانونية',
-                'service1-title': 'استشارات قانونية',
-                'service1-desc': 'استشارات فردية ومؤسسية في كافة المسائل القانونية',
-                'service2-title': 'صياغة العقود',
-                'service2-desc': 'صياغة ومراجعة العقود التجارية والاتفاقيات',
-                'service3-title': 'تمثيل قضائي',
-                'service3-desc': 'تمثيلك أمام المحاكم والجهات القضائية',
-                'service4-title': 'توثيق وصياغة',
-                'service4-desc': 'توثيق المحاضر والوكالات والمستندات القانونية',
-                'about-title': 'من',
-                'about-span': 'نحن',
-                'about-p1': 'نحن فريق من المستشارين القانونيين المتخصصين، نملك خبرة تمتد لأكثر من 15 عاماً في مختلف فروع القانون.',
-                'about-p2': 'نسعى لتقديم خدمات قانونية متميزة بأسعار مناسبة، مع التركيز على فهم احتياجات كل ع��يل.',
-                'about-p3': 'نضمن السرية التامة لجميع المعلومات والبيانات.',
-                'stat1': 'سنة خبرة',
-                'stat2': 'قضية ناجحة',
-                'stat3': 'رضا العملاء',
-                'faq-title': 'أسئلة',
-                'faq-span': 'وأجوبة',
-                'faq-desc': 'أكثر الأسئلة شيوعاً في المسائل القانونية',
-                'faq-q1': 'ما هي المستندات المطلوبة لرفع دعوى قضائية؟',
-                'faq-a1': 'تختلف المستندات حسب نوع القضية، ولكن بشكل عام تشمل: إثبات الشخصية، المستندات الداعمة للدعوى، والعقود ذات الصلة.',
-                'faq-q2': 'كم تستغرق القضية في المحكمة؟',
-                'faq-a2': 'تختلف المدة حسب نوع القضية وتعقيدها، وتتراوح بين بضعة أسابيع إلى عدة أشهر. سنقدم لك توقعات دقيقة.',
-                'faq-q3': 'هل يمكن الحصول على استشارة قانونية مجانية؟',
-                'faq-a3': 'نقدم استشارة أولية مجانية لمدة 15 دقيقة لتقييم قضيتك، ثم يتم الاتفاق على أتعاب الاستشارة.',
-                'faq-q4': 'كيف أختار المحامي المناسب لقضيتي؟',
-                'faq-a4': 'اختر محامياً متخصصاً في مجال قضيتك، ولديه خبرة مثبتة. يمكننا مساعدتك في اختيار الأنسب.',
-                'articles-title': 'المقالات',
-                'articles-span': 'القانونية',
-                'articles-desc': 'أحدث المقالات والنصائح القانونية',
-                'article1-title': 'حقوقك في العقود التجارية',
-                'article1-desc': 'شرح مفصل لأهم الحقوق والواجبات في العقود التجارية',
-                'read-more1': 'اقرأ المزيد →',
-                'article2-title': 'خطوات رفع الدعوى في المحكمة',
-                'article2-desc': 'دليل شامل خطوة بخطوة لرفع دعوى قضائية',
-                'read-more2': 'اقرأ المزيد →',
-                'article3-title': 'التشريعات الجديدة في القانون التجاري',
-                'article3-desc': 'أحدث التعديلات والقوانين الجديدة',
-                'read-more3': 'اقرأ المزيد →',
-                'contact-title': 'اتصل',
-                'contact-span': 'بنا',
-                'contact-intro': 'نرحب بكل استفساراتكم وطلباتكم. تواصلوا معنا عبر:',
-                'phone': '+966 50 1234567',
-                'email': 'info@legalblog.com',
-                'location': 'الرياض، المملكة العربية السعودية',
-                'form-name': 'اسمك الكامل',
-                'form-email': 'بريدك الإلكتروني',
-                'form-message': 'رسالتك',
-                'form-submit': 'إرسال الرسالة',
-                'footer-text': '© 2024 المستشار القانوني. جميع الحقوق محفوظة |',
-                'footer-designed': 'صمم بكل احترافية'
-            },
-            ku: {
-                'logo-text': 'مشاوری',
-                'logo-name': 'یاسایی',
-                'hero-title': 'مشاوری',
-                'hero-span': 'یاسایی',
-                'hero-desc': 'مه خزمەتگوزاریەکانی مشاوریی یاسایی و چارەسەریی جێگیر دەکەین بە پێداچونێوی و ڕاستگۆیی.',
-                'btn-consult': 'پێویستی بە مشاورە',
-                'services-title': 'خزمەتگوزاری',
-                'services-span': 'یاسایی',
-                'services-desc': 'کۆمەڵە تێکدانی خزمەتگوزاریەکانی یاسایی دەکەین',
-                'service1-title': 'مشاوریی یاسایی',
-                'service1-desc': 'مشاوریی کۆمەڵی و دامەزراوایی لە هەموو بابەتە یاسایییەکاندا',
-                'service2-title': 'نووسینی قوناغ',
-                'service2-desc': 'نووسینی و پێداچونێوی قوناغەکانی بازرگانی و پەیمانی',
-                'service3-title': 'نوێندەری دادگا',
-                'service3-desc': 'نوێندەری ئێتو لەبەرامبەر دادگا و دەستەکانی یاسایی',
-                'service4-title': 'تۆمار و نووسین',
-                'service4-desc': 'تۆماری پرۆتۆکۆڵ و وەکالەت و بەڵگەنامەکانی یاسایی',
-                'about-title': 'ئێمە',
-                'about-span': 'کێین',
-                'about-p1': 'ئێمە کۆمە لە مشاوریش یاساییش تایبەتمەند، خبرەی ئێمە بۆ زیاتر لە ١٥ ساڵ لە جۆری جۆری یاسا.',
-                'about-p2': 'ئێمە هیوا دەکەین خزمەتگوزاریەکانی یاسایی بەتایبەتی بە نرخی گونجاو، و سەرتۆڕی سەر تێگەیشتن لە پێویستە هەر مێردکە.',
-                'about-p3': 'ئێمە نهێنی تێر و بەلگەی هەموو مێردان دەبەخشین.',
-                'stat1': 'ساڵی خبرە',
-                'stat2': 'دادرەسی سەرکەفتوو',
-                'stat3': 'تێپەڕی موشتریی',
-                'faq-title': 'سوال',
-                'faq-span': 'و وەڵام',
-                'faq-desc': 'بەتریشتریش سوالەکانی بابەتە یاسایییەکان',
-                'faq-q1': 'چی بەڵگەنامە پێویستە دادرەسی بەرزکردن؟',
-                'faq-a1': 'بەڵگەنامەکان جیاواز دەبن بە جۆری دادرەسیدا، بەلام بەشێوەیەکی گشتی لێی دریت: ناسنامە، بەڵگەنامەکانی پشتگیری دادرەسی، و قوناغەکانی پەیوەندیدار.',
-                'faq-q2': 'دادرەسیکە چەندە کات دەلێت دادگادا؟',
-                'faq-a2': 'کاتەکە جیاواز دەبت بە جۆری و ئاستی دادرەسیدا، و بە نێوان چەند هەفتەیەک تا چەند مانگیەک دەبت. ئێمە پێشبینیی دروست دەدەینت.',
-                'faq-q3': 'ئایا مشاوریی یاسایی بێ پارە دەتوانن بگرن؟',
-                'faq-a3': 'ئێمە مشاورەی یەکەمی بێ پارە کۆی ١٥ خولەک دەکەین تا دادرەسیی ئێتو رێزگرتبێت، پاشان لە سەر پاس مشاوریی ڕاوێژ دەکرێت.',
-                'faq-q4': 'چۆن محامی گونجاو بۆ دادرەسیی ئێتو هەڵبژێرم؟',
-                'faq-a4': 'محامی تایبەتمەندی بابەتی دادرەسیی ئێتو هەڵبژێرە، و خبرەی ڕاستکردا هەبێت. ئێمە دەتوانین یاریدەتیت بکەین.',
-                'articles-title': 'نووسینە',
-                'articles-span': 'یاسایی',
-                'articles-desc': 'نووسینە و خاڵە نیشانداری یاسایی کۆتاییەکان',
-                'article1-title': 'مافی ئێتو لە قوناغی بازرگانیدا',
-                'article1-desc': 'شرۆڤەی بەتفصیل لە سەرەتای مافی و ئیتلاف لە قوناغی بازرگانیدا',
-                'read-more1': 'زیاتر بخوێن →',
-                'article2-title': 'پێوانە بەرزکردنی دادرەسی دادگادا',
-                'article2-desc': 'ڕهێنەری تێکدانی قۆڵ بە قۆڵ دادرەسی بەرزکردن',
-                'read-more2': 'زیاتر بخوێن →',
-                'article3-title': 'یاسا نوێکانی یاسای بازرگانی',
-                'article3-desc': 'گۆڕینی و یاسا نوێکانی کۆتاییان',
-                'read-more3': 'زیاتر بخوێن →',
-                'contact-title': 'پەیوەندی',
-                'contact-span': 'بگرن',
-                'contact-intro': 'ئێمە پێشانگای پرسیار و داواکاریی هەمووی ئێتوین. لە ڕێی خوارین پەیوەندی لێ بگرن:',
-                'phone': '+966 50 1234567',
-                'email': 'info@legalblog.com',
-                'location': 'ریاض، شاڕی عربی یەکگرتووەکان',
-                'form-name': 'ناوی تێرتت',
-                'form-email': 'ئیمێیلی ئێتو',
-                'form-message': 'نامەی ئێتو',
-                'form-submit': 'ناردنی نامە',
-                'footer-text': '© 2024 مشاوری یاسایی. هەموو مافەکان پارێزراو |',
-                'footer-designed': 'بەتایبەتی طراحیکراو'
-            }
-        };
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>تواصل معنا</h2>
+            <p class="section-desc">نحن هنا لمساعدتك - تواصل معنا بأي طريقة مناسبة</p>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <i class="fas fa-phone"></i>
+                    <h3>الهاتف</h3>
+                    <p><a href="tel:+9647512501616">+9647512501616</a></p>
+                    <p><a href="tel:+9647715601616">+9647715601616</a></p>
+                </div>
+                <div class="contact-card">
+                    <i class="fas fa-envelope"></i>
+                    <h3>البريد الإلكتروني</h3>
+                    <p><a href="mailto:ibrahimsorkan4@gmail.com">ibrahimsorkan4@gmail.com</a></p>
+                </div>
+                <div class="contact-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>ساعات العمل</h3>
+                    <p>السبت - الخميس: 9:00 - 18:00</p>
+                    <p>الجمعة: مغلق</p>
+                </div>
+                <div class="contact-card">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>الموقع</h3>
+                    <p>متاح أونلاين 24/7</p>
+                    <p>استشارات عبر الإنترنت</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        let currentLang = 'ar';
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>عن الموقع</h4>
+                    <p>منصة متخصصة لتقديم الاستشارات القانونية الموثوقة والسريعة عبر الإنترنت.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>الروابط السريعة</h4>
+                    <ul>
+                        <li><a href="#home">الرئيسية</a></li>
+                        <li><a href="#services">الخدمات</a></li>
+                        <li><a href="#consultation">استشارة</a></li>
+                        <li><a href="#contact">اتصل</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>السياسات</h4>
+                    <ul>
+                        <li><a href="#">سياسة الخصوصية</a></li>
+                        <li><a href="#">شروط الاستخدام</a></li>
+                        <li><a href="#">إتفاقية السرية</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 استشارات قانونية احترافية - جميع الحقوق محفوظة</p>
+                <p>تم التطوير بواسطة <strong>Ibrahim Legal Services</strong></p>
+            </div>
+        </div>
+    </footer>
 
-        function switchLanguage(lang) {
-            currentLang = lang;
-            const htmlElement = document.documentElement;
-            
-            // تبديل الاتجاه
-            if (lang === 'ku') {
-                htmlElement.setAttribute('lang', 'ku');
-                htmlElement.setAttribute('dir', 'rtl');
-            } else {
-                htmlElement.setAttribute('lang', 'ar');
-                htmlElement.setAttribute('dir', 'rtl');
-            }
-
-            // تحديث جميع النصوص
-            const allElements = document.querySelectorAll('[id^="logo-"], [id^="hero-"], [id^="btn-"], [id^="services-"], [id^="service"], [id^="about-"], [id^="stat"], [id^="faq-"], [id^="article"], [id^="read-more"], [id^="contact-"], [id^="form-"], [id^="phone"], [id^="email"], [id^="location"], [id^="footer-"]');
-            
-            allElements.forEach(el => {
-                const id = el.id;
-                if (translations[lang] && translations[lang][id]) {
-                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                        el.placeholder = translations[lang][id];
-                    } else {
-                        el.textContent = translations[lang][id];
-                    }
-                }
-            });
-
-            // تحديث أزرار اللغة
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-        }
-
-        function toggleFAQ(button) {
-            const answer = button.nextElementSibling;
-            button.classList.toggle('active');
-            answer.classList.toggle('open');
-        }
-    </script>
-</body>  
+    <script src="script.js"></script>
+</body>
 </html>
